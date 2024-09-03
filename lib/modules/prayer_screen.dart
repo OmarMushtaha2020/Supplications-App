@@ -57,7 +57,7 @@ class PrayerScreen extends StatelessWidget {
                             positionFactor: 0.1,
                             angle: 90,
                             widget: Text(
-                               '${AppCubit.get(context).number} / $number',
+                               '${AppCubit.get(context).number} / ${number}',
                               style: const TextStyle(fontSize: 20),
                             ))
                       ])

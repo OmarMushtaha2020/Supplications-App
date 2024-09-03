@@ -14,12 +14,14 @@ Future<void> changeValueNumber(int num) async {
   if(number<num){
     number++;
 if(number==num){
+  Future.delayed(Duration(seconds: 1)).then((value) {
+    number=0;
+emit(ChangeValueNumber());
+  });
   Vibration.hasVibrator().then((hasVibrator) {
     if (hasVibrator ?? false) {
       // Trigger a short vibration
-      Vibration.vibrate(duration: 500).then((value) {
-
-
+      Vibration.vibrate(duration: 800).then((value) {
 
       });
 // duration in milliseconds
