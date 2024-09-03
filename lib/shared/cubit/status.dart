@@ -5,3 +5,4 @@ class CreatDb extends AppStates{}
 class InsertToDb extends AppStates{}
 class LoadData extends AppStates{}
 class GetFormDb extends AppStates{}
+class DeleteElement extends AppStates{}

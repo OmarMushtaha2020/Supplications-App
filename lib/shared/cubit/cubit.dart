@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(InitialState());
   static AppCubit get(context) => BlocProvider.of(context);
+  int sum=0;
 
   late Database db;
   List<Map> supplications = [];
@@ -44,6 +45,7 @@ class AppCubit extends Cubit<AppStates> {
         'INSERT INTO myPrayers(title, number) VALUES(?, ?)',
         [title, number],
       ).then((value) {
+        print(sum);
         print("Record inserted successfully with ID: $value");
         emit(InsertToDb());
         getAllSupplications(db);
@@ -54,15 +56,33 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void getAllSupplications(Database db) async {
+    sum=0;
     emit(LoadData());
+
     db.rawQuery('SELECT * FROM myPrayers').then((value) {
       supplications = value;
-      print(supplications);
+
+      int total = 0;
+
+      for (var supplication  in supplications) {
+        sum += supplication['number']as int? ??0;
+      }
+
+      print('Total sum of numbers: $total');
 
       emit(GetFormDb());
-
     }).catchError((error) {
       print("Error fetching data: ${error.toString()}");
     });
   }
+  void deleteElement( int id){
+    db.rawDelete(
+        'DELETE FROM myPrayers WHERE id = ?', [id]).then((value) {
+
+      getAllSupplications(db);
+      emit(DeleteElement());
+    }) ;
+
+  }
+
 }
