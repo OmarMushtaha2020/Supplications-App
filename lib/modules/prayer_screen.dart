@@ -28,15 +28,16 @@ class PrayerScreen extends StatelessWidget {
               children: [
                 Text(
                   "${title}",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
+                SizedBox(height: 20,),
                 SfRadialGauge(axes: <RadialAxis>[
                   RadialAxis(
                       minimum: 0,
                       maximum: num,
                       showLabels: false,
                       showTicks: false,
-                      axisLineStyle: AxisLineStyle(
+                      axisLineStyle: const AxisLineStyle(
                         thickness: 0.2,
                         cornerStyle: CornerStyle.bothCurve,
                         color: Color.fromARGB(30, 0, 169, 181),
@@ -57,12 +58,12 @@ class PrayerScreen extends StatelessWidget {
                             angle: 90,
                             widget: Text(
                                '${AppCubit.get(context).number} / $number',
-                              style: TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 20),
                             ))
                       ])
                 ]),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
                       width: double.infinity,
                       height: 60,
@@ -75,8 +76,8 @@ class PrayerScreen extends StatelessWidget {
                         onPressed: () {
 AppCubit.get(context).changeValueNumber(number!);
                         },
-                        child: Text(
-                          "Make a prayer",
+                        child: const Text(
+                          "قم بدعاء",
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       )),
