@@ -1,72 +1,68 @@
-
 import 'package:daily_supplications_app/shared/cubit/status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 
-
-
-
-class AppCubit extends Cubit<AppStates>{
+class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(InitialState());
-  static AppCubit get(context)=>BlocProvider.of(context);
+  static AppCubit get(context) => BlocProvider.of(context);
+
   late Database db;
-  List<Map>supplications=[];
-  void creatDd() async {
+  List<Map> supplications = [];
+
+  void createDb() async {
     openDatabase(
-      'qwq.db',
-      version: 5,
+      'supplications.db',
+      version: 1,
       onCreate: (db, version) {
         db.execute(
-            'CREATE TABLE Tasq (id INTEGER PRIMARY KEY, title TEXT,time TEXT , date TEXT ,statue TEXT,color INTEGER,value INTEGER)')
-            .then((value) {
-          print("table creat");
+          'CREATE TABLE myPrayers (id INTEGER PRIMARY KEY, title TEXT, number INTEGER)',
+        ).then((value) {
+          print("Table created");
         }).catchError((error) {
-          print("error is ${error.toString()}");
+          print("Error during table creation: ${error.toString()}");
         });
-        print("data base creat");
+        print("Database created");
       },
       onOpen: (db) {
-        print("data base open");
-        getListOfNewTask(db,0);
+        print("Database opened");
+        getAllSupplications(db);
       },
-    ).then((value){
-      db=value;
+    ).then((value) {
+      db = value;
       emit(CreatDb());
+    }).catchError((error) {
+      print("Error opening database: ${error.toString()}");
     });
   }
-  Future<void> insertToDd({
+
+  Future<void> insertToDb({
     required String title,
-    required String time,
-    required String date,
-    required int color,
-    required int value,
-
-  }) async =>
-      db.transaction((txn) async{
-        await txn
-            .rawInsert(
-            'INSERT INTO Tasq(title, time, date,statue,color,value) VALUES("$title", "$time", "$date","New","$color","$value")')
-
-            .then((value) {
-
-          print("$value insert succfelod");
-          emit(InsertToDb());
-
-          getListOfNewTask(db,0);
-
-
-        }).catchError((error) {
-          print("Error");
-        });
+    required int number,
+  }) async {
+    await db.transaction((txn) async {
+      await txn.rawInsert(
+        'INSERT INTO myPrayers(title, number) VALUES(?, ?)',
+        [title, number],
+      ).then((value) {
+        print("Record inserted successfully with ID: $value");
+        emit(InsertToDb());
+        getAllSupplications(db);
+      }).catchError((error) {
+        print("Error during insertion: ${error.toString()}");
       });
+    });
+  }
 
-  void getListOfNewTask(db,int value)  {
-
+  void getAllSupplications(Database db) async {
     emit(LoadData());
-    db.rawQuery('SELECT * FROM Tasq WHERE value =?',[value]).then((value) {
+    db.rawQuery('SELECT * FROM myPrayers').then((value) {
       supplications = value;
+      print(supplications);
 
       emit(GetFormDb());
+
+    }).catchError((error) {
+      print("Error fetching data: ${error.toString()}");
     });
   }
 }
