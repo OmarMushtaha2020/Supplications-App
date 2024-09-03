@@ -1,3 +1,4 @@
+import 'package:daily_supplications_app/modules/prayer_screen.dart';
 import 'package:daily_supplications_app/shared/cubit/status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -124,40 +125,46 @@ class SupplicationsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: ListView.separated(scrollDirection: Axis.vertical,shrinkWrap: true,physics: BouncingScrollPhysics(),itemBuilder: (context,index)=>Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    width: double.infinity,
-                    height: 80,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PrayerScreen(AppCubit.get(context).supplications[index]['title'],AppCubit.get(context).supplications[index]['number']))); // Close the modal sheet
 
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-
-                        children: [
-                          Text("${AppCubit.get(context).supplications[index]['title']}",style: TextStyle(
-                            color: Colors.white
-                                ,fontSize: 20,
-
-                          ),),
-                          Text("${AppCubit.get(context).supplications[index]['number']}",style: TextStyle(
-                            color: Colors.white
-                            ,fontSize: 20,
-                          ),),
-
-                        ],
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 80,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                    
+                          borderRadius: BorderRadius.circular(10)
                       ),
-            Spacer(),
-                          IconButton(onPressed: (){
-                            AppCubit.get(context).deleteElement(AppCubit.get(context).supplications[index]['id']);
-                          }, icon: Icon(Icons.delete,color: Colors.grey[200],)),
-
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                    
+                          children: [
+                            Text("${AppCubit.get(context).supplications[index]['title']}",style: TextStyle(
+                              color: Colors.white
+                                  ,fontSize: 20,
+                    
+                            ),),
+                            Text("${AppCubit.get(context).supplications[index]['number']}",style: TextStyle(
+                              color: Colors.white
+                              ,fontSize: 20,
+                            ),),
+                    
+                          ],
+                        ),
+                                Spacer(),
+                            IconButton(onPressed: (){
+                              AppCubit.get(context).deleteElement(AppCubit.get(context).supplications[index]['id']);
+                            }, icon: Icon(Icons.delete,color: Colors.grey[200],)),
+                    
+                          ],
+                        ),
                       ),
                     ),
                   ),

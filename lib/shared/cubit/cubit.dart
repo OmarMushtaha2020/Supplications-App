@@ -1,15 +1,37 @@
 import 'package:daily_supplications_app/shared/cubit/status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:vibration/vibration.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(InitialState());
   static AppCubit get(context) => BlocProvider.of(context);
   int sum=0;
-
+double number=0;
   late Database db;
   List<Map> supplications = [];
+Future<void> changeValueNumber(int num) async {
+  if(number<num){
+    number++;
+if(number==num){
+  Vibration.hasVibrator().then((hasVibrator) {
+    if (hasVibrator ?? false) {
+      // Trigger a short vibration
+      Vibration.vibrate(duration: 500).then((value) {
 
+
+
+      });
+// duration in milliseconds
+    }
+  });
+
+}
+    emit(ChangeValueNumber());
+
+  }
+
+}
   void createDb() async {
     openDatabase(
       'supplications.db',
