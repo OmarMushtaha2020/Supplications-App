@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SupplicationsScreen extends StatelessWidget {
-  const SupplicationsScreen({super.key});
+   SupplicationsScreen({super.key});
+var form=GlobalKey<FormState>();
+var supplication=TextEditingController();
+var  numberOfSupplications=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,67 +15,87 @@ class SupplicationsScreen extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return Container(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Add Supplication",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: form,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Add Supplication",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your supplication',
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        controller: supplication,
+validator: (String ?value){
+                          if(value!.isEmpty){
+                            return "Please write a supplication";
+                          }
+                          return null;
+},
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter your supplication',
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      keyboardType: TextInputType.number,
-
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter the number of supplications',
-
-                      ),
-                    ),
-
-                    SizedBox(height: 20,),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      color: Colors.blue,
-
-                      child: MaterialButton(
-                        onPressed: () {
-                          // Add your save logic here
-                          Navigator.pop(context); // Close the modal sheet
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        validator: (String ?value){
+                          if(value!.isEmpty){
+                            return "Please write  number Of a supplication";
+                          }
+                          return null;
                         },
-                        child: Text('Save',style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20
-                        ),),
+                        controller: numberOfSupplications,
+                        keyboardType: TextInputType.number,
+
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter the number of supplications',
+
+                        ),
                       ),
-                    ),
-                  ],
+
+                      const SizedBox(height: 20,),
+                      Container(
+                        width: double.infinity,
+                        height: 50,
+                        color: Colors.blue,
+
+                        child: MaterialButton(
+                          onPressed: () {
+                            if(form.currentState!.validate()){
+                              Navigator.pop(context); // Close the modal sheet
+
+                            }
+                            // Add your save logic here
+                          },
+                          child: const Text('Save',style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20
+                          ),),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
           );
         },
-        child: Icon(
+        backgroundColor: Colors.blue,
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
-        backgroundColor: Colors.blue,
       ),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Supplications",
           style: TextStyle(
             color: Colors.white,
@@ -81,7 +104,7 @@ class SupplicationsScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.blue,
       ),
-      body: Column(
+      body: const Column(
         children: [],
       ),
     );
