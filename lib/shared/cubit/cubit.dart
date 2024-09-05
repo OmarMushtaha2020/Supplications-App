@@ -5,50 +5,52 @@ import 'package:vibration/vibration.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(InitialState());
+
   static AppCubit get(context) => BlocProvider.of(context);
-  int sum=0;
-double number=0;
-bool isClick=false;
-   Future<void> changeValueOfClick(bool value) async {
-  isClick=value;
-  emit(ChangeValueOfClick());
-}
-  late Database db;
-  List<Map> supplications = [];
-Future<void> changeValueNumber(int num) async {
-  if(number<num){
-    number++;
-    print(number);
+  int sum = 0;
+  double number = 0;
+  bool isClick = false;
 
-    if(number==num){
-  Future.delayed(Duration(seconds: 1)).then((value) {
-    number=0;
-emit(ChangeValueNumber());
-  });
-  Vibration.hasVibrator().then((hasVibrator) {
-    if (hasVibrator ?? false) {
-      // Trigger a short vibration
-      Vibration.vibrate(duration: 800).then((value) {
-
-      });
-// duration in milliseconds
-    }
-  });
-
-}
-    emit(ChangeValueNumber());
-
+  Future<void> changeValueOfClick(bool value) async {
+    isClick = value;
+    emit(ChangeValueOfClick());
   }
 
-}
+  late Database db;
+  List<Map> supplications = [];
+
+  Future<void> changeValueNumber(int num,int id) async {
+    if (number < num) {
+      number++;
+      print(number);
+updatesNumberOfTimesSupplication(number, id);
+      if (number == num) {
+        Future.delayed(Duration(seconds: 1)).then((value) {
+          number = 0;
+          emit(ChangeValueNumber());
+        });
+        Vibration.hasVibrator().then((hasVibrator) {
+          if (hasVibrator ?? false) {
+            // Trigger a short vibration
+            Vibration.vibrate(duration: 800).then((value) {});
+// duration in milliseconds
+          }
+        });
+      }
+      emit(ChangeValueNumber());
+    }
+  }
+
   void createDb() async {
     openDatabase(
       'supplications.db',
-      version: 1,
+      version: 2,
       onCreate: (db, version) {
-        db.execute(
-          'CREATE TABLE myPrayers (id INTEGER PRIMARY KEY, title TEXT, number INTEGER)',
-        ).then((value) {
+        db
+            .execute(
+          'CREATE TABLE myPrayers (id INTEGER PRIMARY KEY, title TEXT, number INTEGER,NumberOfTimesSupplication INTEGER)',
+        )
+            .then((value) {
           print("Table created");
         }).catchError((error) {
           print("Error during table creation: ${error.toString()}");
@@ -73,8 +75,8 @@ emit(ChangeValueNumber());
   }) async {
     await db.transaction((txn) async {
       await txn.rawInsert(
-        'INSERT INTO myPrayers(title, number) VALUES(?, ?)',
-        [title, number],
+        'INSERT INTO myPrayers(title, number,NumberOfTimesSupplication) VALUES(?, ?, ?)',
+        [title, number,0],
       ).then((value) {
         print(sum);
         print("Record inserted successfully with ID: $value");
@@ -87,7 +89,7 @@ emit(ChangeValueNumber());
   }
 
   void getAllSupplications(Database db) async {
-    sum=0;
+    sum = 0;
     emit(LoadData());
 
     db.rawQuery('SELECT * FROM myPrayers').then((value) {
@@ -95,39 +97,44 @@ emit(ChangeValueNumber());
 
       int total = 0;
 
-      for (var supplication  in supplications) {
-        sum += supplication['number']as int? ??0;
+      for (var supplication in supplications) {
+        sum += supplication['NumberOfTimesSupplication'] as int? ?? 0;
       }
 
       print('Total sum of numbers: $total');
-print(supplications);
+      print(supplications);
       emit(GetFormDb());
     }).catchError((error) {
       print("Error fetching data: ${error.toString()}");
     });
   }
-  void deleteElement( int id){
-    db.rawDelete(
-        'DELETE FROM myPrayers WHERE id = ?', [id]).then((value) {
 
+  void deleteElement(int id) {
+    db.rawDelete('DELETE FROM myPrayers WHERE id = ?', [id]).then((value) {
       getAllSupplications(db);
       emit(DeleteElement());
-    }) ;
-
+    });
   }
 
-  void updatesDataForElement( String title,int number,int id){
-
-changeValueOfClick(true);
-    db.rawUpdate(
-        'UPDATE myPrayers SET  title= ?, number=?  WHERE id = ?',
-        ['$title',number, id]).then((value){
-          getAllSupplications(db);
+  void updatesDataForElement(String title, int number, int id) {
+    changeValueOfClick(true);
+    db.rawUpdate('UPDATE myPrayers SET  title= ?, number=?  WHERE id = ?',
+        ['$title', number, id]).then((value) {
+      getAllSupplications(db);
 
       emit(UpdateSupplication());
     });
     emit(UpdateSupplication());
+  }
+  void updatesNumberOfTimesSupplication(dynamic numberOfTimesSupplication,int id) {
+    changeValueOfClick(true);
+    db.rawUpdate('UPDATE myPrayers SET   NumberOfTimesSupplication=?  WHERE id = ?',
+        [numberOfTimesSupplication, id]).then((value) {
+      getAllSupplications(db);
 
+      emit(UpdateSupplication());
+    });
+    emit(UpdateSupplication());
   }
 
 }

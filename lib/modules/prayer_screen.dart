@@ -9,8 +9,9 @@ import 'supplications_screen.dart';
 class PrayerScreen extends StatelessWidget {
   String? title;
   int? number;
+  int? id;
 
-  PrayerScreen(this.title, this.number);
+  PrayerScreen(this.title, this.number,this.id);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +82,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SupplicationsScree
                       ),
                       child: MaterialButton(
                         onPressed: () {
-AppCubit.get(context).changeValueNumber(number!);
+AppCubit.get(context).changeValueNumber(number!,id!);
                         },
                         child: const Text(
                           "قم بدعاء",

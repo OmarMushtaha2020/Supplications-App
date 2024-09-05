@@ -63,7 +63,7 @@ class SupplicationsScreen extends StatelessWidget {
                                           .supplications[index]['title'],
                                       AppCubit.get(context)
                                           .supplications[index][
-                                      'number']))); // Close the modal sheet
+                                      'number'],AppCubit.get(context).supplications[index]['id']))); // Close the modal sheet
                         },
                         child: Container(
                           width: double.infinity,
@@ -259,6 +259,8 @@ class SupplicationsScreen extends StatelessWidget {
                                   supplication.text,
                                   int.parse(numberOfSupplications.text.toString()),
                                   id);
+                              numberOfSupplications.text="";
+                              supplication.text='';
                               Navigator.pop(context); // Close the modal sheet
                             }
                           }
