@@ -188,7 +188,16 @@ class SupplicationsScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    IconButton(
+
+        IconButton(
+        onPressed: () {
+
+        },
+        icon: Icon(
+        Icons.mode_rounded,
+        color: Colors.grey[200],
+        )),
+        IconButton(
                                         onPressed: () {
                                           AppCubit.get(context).deleteElement(
                                               AppCubit.get(context)
