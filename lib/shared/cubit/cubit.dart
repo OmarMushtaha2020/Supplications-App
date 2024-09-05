@@ -8,12 +8,19 @@ class AppCubit extends Cubit<AppStates> {
   static AppCubit get(context) => BlocProvider.of(context);
   int sum=0;
 double number=0;
+bool isClick=false;
+   Future<void> changeValueOfClick(bool value) async {
+  isClick=value;
+  emit(ChangeValueOfClick());
+}
   late Database db;
   List<Map> supplications = [];
 Future<void> changeValueNumber(int num) async {
   if(number<num){
     number++;
-if(number==num){
+    print(number);
+
+    if(number==num){
   Future.delayed(Duration(seconds: 1)).then((value) {
     number=0;
 emit(ChangeValueNumber());
@@ -93,7 +100,7 @@ emit(ChangeValueNumber());
       }
 
       print('Total sum of numbers: $total');
-
+print(supplications);
       emit(GetFormDb());
     }).catchError((error) {
       print("Error fetching data: ${error.toString()}");
@@ -106,6 +113,20 @@ emit(ChangeValueNumber());
       getAllSupplications(db);
       emit(DeleteElement());
     }) ;
+
+  }
+
+  void updatesDataForElement( String title,int number,int id){
+
+changeValueOfClick(true);
+    db.rawUpdate(
+        'UPDATE myPrayers SET  title= ?, number=?  WHERE id = ?',
+        ['$title',number, id]).then((value){
+          getAllSupplications(db);
+
+      emit(UpdateSupplication());
+    });
+    emit(UpdateSupplication());
 
   }
 

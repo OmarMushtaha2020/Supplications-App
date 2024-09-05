@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import 'supplications_screen.dart';
+
 class PrayerScreen extends StatelessWidget {
   String? title;
   int? number;
@@ -19,7 +21,12 @@ class PrayerScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            leading: IconButton(onPressed: (){
+AppCubit.get(context).number=0;
+Navigator.push(context, MaterialPageRoute(builder: (context)=>SupplicationsScreen()));
+            }, icon: Icon(Icons.arrow_back),),
+          ),
           body: Container(
             width: double.infinity,
             child: Column(
