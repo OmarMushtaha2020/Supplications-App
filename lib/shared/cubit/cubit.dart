@@ -1,4 +1,5 @@
 import 'package:daily_supplications_app/shared/cubit/status.dart';
+import 'package:daily_supplications_app/shared/local/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vibration/vibration.dart';
@@ -10,7 +11,35 @@ class AppCubit extends Cubit<AppStates> {
   int sum = 0;
   double number = 0;
   bool isClick = false;
+  bool themeMode=false;
 
+  // void change_theme({bool? value}) {
+  //   if (value != null) {
+  //     isDark = value;
+  //   } else {
+  //     isDark = !isDark;
+  //     Cacth_Helper.putBoolean('isDark', isDark).then((value) {});
+  //   }
+  //   emit(Change_Theme());
+  // }
+
+  Future<void> changeValueOfThemeMode({bool? value}) async {
+    if (value != null) {
+      themeMode = value;
+
+    }else{
+      themeMode=!themeMode;
+
+       CacthHelper.putBoolean(  'themeMode', themeMode);
+    bool ?getValue=  CacthHelper.get_Data(key: 'themeMode');
+      print(themeMode);
+      print("getValue$getValue");
+
+    }
+
+
+    emit(ChangeValueOfThemeMode());
+  }
   Future<void> changeValueOfClick(bool value) async {
     isClick = value;
     emit(ChangeValueOfClick());

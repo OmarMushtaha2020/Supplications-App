@@ -1,5 +1,7 @@
 import 'package:daily_supplications_app/modules/supplications_screen.dart';
 import 'package:daily_supplications_app/shared/cubit/cubit.dart';
+import 'package:daily_supplications_app/shared/cubit/status.dart';
+import 'package:daily_supplications_app/shared/local/shared_preferences.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,20 +9,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacthHelper.inti();
+bool?  themeModeValue= await CacthHelper.get_Data(key: "themeMode")??false;
+print(themeModeValue!);
   runApp(
     DevicePreview(
       enabled: true, // Set to false in production
       builder: (context) => BlocProvider(
-        create: (context) => AppCubit()..createDb(),
-        child: MyApp(),
+        create: (context) => AppCubit()..createDb()..changeValueOfThemeMode(value:themeModeValue ),
+        child: MyApp(themeModeValue),
       ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  bool ?value;
+   MyApp(value);
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +39,23 @@ class MyApp extends StatelessWidget {
           data: MediaQuery.of(context),
 
         );
-        return App();
+        return App(value);
       },
     );
   }
 }
 class App extends StatelessWidget {
-  const App({super.key});
+  bool ?value;
+  App(value);
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  BlocConsumer<AppCubit, AppStates>(
+  listener: (context, state) {
+    // TODO: implement listener
+  },
+  builder: (context, state) {
+    return MaterialApp(
       useInheritedMediaQuery: true, // Necessary for DevicePreview
       locale: Locale('ar'),
       builder: DevicePreview.appBuilder,
@@ -99,12 +112,14 @@ class App extends StatelessWidget {
           )
       ),
 
-      themeMode: ThemeMode.light,
+      themeMode: AppCubit.get(context).themeMode?ThemeMode.light:ThemeMode.dark,
 
 
       debugShowCheckedModeBanner: false,
       home: SupplicationsScreen(),
     );
+  },
+);
   }
 }
 

@@ -29,6 +29,7 @@ class PrayerScreen extends StatelessWidget {
             actions: [
               IconButton(
               onPressed: () {
+                AppCubit.get(context).changeValueOfThemeMode();
         },
             icon: Icon(
               Icons.nightlight_round,
