@@ -214,6 +214,7 @@ class SupplicationsScreen extends StatelessWidget {
   void _showBottomSheet(BuildContext context, {int? id}) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true, // Make the bottom sheet scrollable
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width
@@ -235,10 +236,9 @@ class SupplicationsScreen extends StatelessWidget {
                      Text(
                       "إضافة الدعاء",
                       maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontSize: 18.sp
+                      )
                     ),
                      SizedBox(height: 20.h),
                     TextFormField(
@@ -249,11 +249,9 @@ class SupplicationsScreen extends StatelessWidget {
                         }
                         return null;
                       },
-style: TextStyle(
+style: Theme.of(context).textTheme.labelMedium?.copyWith(
     fontSize: 14.sp
-
 ),
-
                       decoration:  InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'أدخل دعاءك',
@@ -261,7 +259,7 @@ style: TextStyle(
                             fontSize: 14.sp
 
                         ),
-                        labelStyle: TextStyle(
+                        labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
                           fontSize: 14.sp
                         )
                       ),
@@ -273,9 +271,10 @@ style: TextStyle(
                           return "الرجاء كتابة رقم المرات التي تريده بها  الدعاء";
                         }
                         return null;
-                      },style: TextStyle(
-                      fontSize: 14.sp
-                    ),
+                      },
+                      style:  Theme.of(context).textTheme.labelMedium?.copyWith(
+                          fontSize: 14.sp
+                      ),
                       controller: numberOfSupplications,
                       keyboardType: TextInputType.number,
                       decoration:  InputDecoration(
@@ -283,7 +282,7 @@ style: TextStyle(
                               fontSize: 14.sp
 
                           ),
-                          labelStyle: TextStyle(
+                          labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
                               fontSize: 14.sp
                           ),
                         border: OutlineInputBorder(),
@@ -294,7 +293,7 @@ style: TextStyle(
                     Container(
                       width: double.infinity,
                       height: 50.h,
-                      color: Colors.blue,
+                      color: Theme.of(context).floatingActionButtonTheme.backgroundColor,
                       child: MaterialButton(
                         onPressed: () {
                           if (form.currentState!.validate()) {
