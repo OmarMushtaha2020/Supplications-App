@@ -55,6 +55,53 @@ class App extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+
+      darkTheme: ThemeData(
+        scaffoldBackgroundColor: Color(0Xff21201e),
+        textTheme: TextTheme(
+          labelMedium: TextStyle(
+              fontSize: 25.sp, fontWeight: FontWeight.bold,
+              color: Colors.white,
+          )
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0XFF005b1e),
+          foregroundColor: Color(0xff000000),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          )
+        ),
+          cardColor: Color(0Xff5846fe),
+
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Color(0xFF01591c),
+        )
+      ),
+      theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: TextTheme(
+              labelMedium: TextStyle(
+                fontSize: 25.sp, fontWeight: FontWeight.bold,
+                color: Colors.black,
+              )
+          ),
+          appBarTheme: AppBarTheme(
+              backgroundColor:Colors.blue,
+              foregroundColor: Colors.blue,
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              )
+          ),
+          cardColor: Colors.blue,
+
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Colors.blue,
+          )
+      ),
+
+      themeMode: ThemeMode.light,
+
+
       debugShowCheckedModeBanner: false,
       home: SupplicationsScreen(),
     );

@@ -24,10 +24,22 @@ class PrayerScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(size: 25.h),
+            backgroundColor: Theme.of(context).appBarTheme.foregroundColor,
+            iconTheme: IconThemeData(size: 25.h,color: Theme.of(context).appBarTheme.iconTheme?.color),
+            actions: [
+              IconButton(
+              onPressed: () {
+        },
+            icon: Icon(
+              Icons.nightlight_round,
+              size: 25.h,
+            ),
+              )
+            ],
             leading: IconButton(
               onPressed: () {
-                AppCubit.get(context).number = 0;
+                AppCubit.get(context).getNumber(id);
+
                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SupplicationsScreen()), (route) => false);
               },
               icon: Icon(
@@ -44,8 +56,7 @@ class PrayerScreen extends StatelessWidget {
               children: [
                 Text(
                   "${title}",
-                  style:  TextStyle(
-                      fontSize: 25.sp, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.labelMedium!,
                 ),
                 SizedBox(
                   height: 20.h,
@@ -68,7 +79,7 @@ class PrayerScreen extends StatelessWidget {
                           cornerStyle: CornerStyle.bothCurve,
                           width: 0.2,
                           sizeUnit: GaugeSizeUnit.factor,
-                          color: Colors.blue, // Set the color here
+                          color: Theme.of(context).floatingActionButtonTheme.backgroundColor,
                         )
                       ],
                       annotations: <GaugeAnnotation>[
@@ -77,7 +88,9 @@ class PrayerScreen extends StatelessWidget {
                             angle: 90,
                             widget: Text(
                               '${AppCubit.get(context).number} / ${number}',
-                              style:  TextStyle(fontSize: 20.sp),
+                              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                fontSize: 20.sp,
+                              ),
                             ))
                       ])
                 ]),
@@ -88,7 +101,7 @@ class PrayerScreen extends StatelessWidget {
                         width: double.infinity,
                         height: 60.h,
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color:Theme.of(context).floatingActionButtonTheme.backgroundColor,
                             borderRadius: BorderRadius.circular(10.r)),
                         child: MaterialButton(
                           onPressed: () {

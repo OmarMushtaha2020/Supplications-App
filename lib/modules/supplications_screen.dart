@@ -33,7 +33,7 @@ class SupplicationsScreen extends StatelessWidget {
                   onPressed: () {
                     _showBottomSheet(context);
                   },
-                  backgroundColor: Colors.blue,
+                  backgroundColor:Theme.of(context).floatingActionButtonTheme.backgroundColor,
                   child:  Icon(
                     Icons.add,
                     color: Colors.white,
@@ -69,7 +69,7 @@ class SupplicationsScreen extends StatelessWidget {
           )
                   ],
                 ),
-                backgroundColor: Colors.blue,
+                backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               ),
               body: Padding(
                 padding:  EdgeInsets.symmetric(vertical: 10.h),
@@ -94,7 +94,7 @@ class SupplicationsScreen extends StatelessWidget {
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color:Theme.of(context).cardColor,
                               borderRadius: BorderRadius.circular(10.r)),
                           child: Padding(
                             padding:
@@ -200,7 +200,7 @@ class SupplicationsScreen extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue,
+                  color: Theme.of(context).floatingActionButtonTheme.backgroundColor
                 ),
                 width: 150.w,
               ),

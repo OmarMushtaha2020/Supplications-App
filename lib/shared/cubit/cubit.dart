@@ -22,9 +22,11 @@ class AppCubit extends Cubit<AppStates> {
   Future<void> changeValueNumber(int num,int id) async {
     if (number < num) {
       number++;
-      print(number);
-updatesNumberOfTimesSupplication(number, id);
+      print("the number is $number");
+// updatesNumberOfTimesSupplication(number, id);
       if (number == num) {
+        getNumber(id);
+
         Future.delayed(Duration(seconds: 1)).then((value) {
           number = 0;
           emit(ChangeValueNumber());
@@ -127,13 +129,8 @@ updatesNumberOfTimesSupplication(number, id);
     emit(UpdateSupplication());
   }
   int ?listNumber;
-  void updatesNumberOfTimesSupplication(dynamic numberOfTimesSupplication,int id) {
-    db.rawQuery('SELECT * FROM myPrayers  WHERE id = $id').then((value) {
-      List item=value;
-      print("List Number${item}");
-      listNumber=item[0]['NumberOfTimesSupplication'];
-      print("list number is$listNumber");
-    });
+  Future<void> updatesNumberOfTimesSupplication(dynamic numberOfTimesSupplication,int id) async {
+
     changeValueOfClick(true);
     db.rawUpdate('UPDATE myPrayers SET   NumberOfTimesSupplication=?  WHERE id = ?',
         [numberOfTimesSupplication!, id]).then((value) {
@@ -143,5 +140,18 @@ updatesNumberOfTimesSupplication(number, id);
     });
     emit(UpdateSupplication());
   }
+  List ?item;
 
+  Future<void> getNumber(id) async {
+  db.rawQuery('SELECT * FROM myPrayers  WHERE id = $id').then((value) {
+    List item=value;
+    listNumber=item[0]['NumberOfTimesSupplication'];
+    print(number);
+    print(listNumber);
+    updatesNumberOfTimesSupplication(number+listNumber!,id).then((value) {
+      number=0;
+      listNumber=0;
+    });
+  });
+}
 }
