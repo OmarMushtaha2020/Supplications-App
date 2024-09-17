@@ -126,10 +126,17 @@ updatesNumberOfTimesSupplication(number, id);
     });
     emit(UpdateSupplication());
   }
+  int ?listNumber;
   void updatesNumberOfTimesSupplication(dynamic numberOfTimesSupplication,int id) {
+    db.rawQuery('SELECT * FROM myPrayers  WHERE id = $id').then((value) {
+      List item=value;
+      print("List Number${item}");
+      listNumber=item[0]['NumberOfTimesSupplication'];
+      print("list number is$listNumber");
+    });
     changeValueOfClick(true);
     db.rawUpdate('UPDATE myPrayers SET   NumberOfTimesSupplication=?  WHERE id = ?',
-        [numberOfTimesSupplication, id]).then((value) {
+        [numberOfTimesSupplication!, id]).then((value) {
       getAllSupplications(db);
 
       emit(UpdateSupplication());

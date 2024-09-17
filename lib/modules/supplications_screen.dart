@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../shared/cubit/cubit.dart';
 
@@ -25,34 +26,59 @@ class SupplicationsScreen extends StatelessWidget {
           alignment: Alignment.topRight,
           children: [
             Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  _showBottomSheet(context);
-                },
-                backgroundColor: Colors.blue,
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
+              floatingActionButton: Container(
+                height: 60.h,
+                width: 60.h,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    _showBottomSheet(context);
+                  },
+                  backgroundColor: Colors.blue,
+                  child:  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 30.h,
+                  ),
                 ),
               ),
               appBar: AppBar(
-                title: const Text(
-                  "ادعيتي",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                  ),
+                toolbarHeight: 80.h,
+                centerTitle: false,
+
+
+                title:  Row(
+                  children: [
+                    Text(
+                      "ادعيتي",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.sp,
+                      ),
+                    ),
+          Spacer(),
+          Center(
+            child: Container(height: 70.w,width: 70.w,child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+
+
+                Center(child: Image.asset("assets/image/imageThree.png",width: 45.w,height: 45.w,fit: BoxFit.cover,)),
+              ],
+            )),
+          )
+                  ],
                 ),
                 backgroundColor: Colors.blue,
               ),
               body: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding:  EdgeInsets.symmetric(vertical: 10.h),
                 child: ListView.separated(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding:  EdgeInsets.symmetric(horizontal: 10.w),
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -69,10 +95,10 @@ class SupplicationsScreen extends StatelessWidget {
                           width: double.infinity,
                           decoration: BoxDecoration(
                               color: Colors.blue,
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(10.r)),
                           child: Padding(
                             padding:
-                            const EdgeInsets.symmetric(horizontal: 20),
+                             EdgeInsets.symmetric(horizontal: 20.w,vertical: 5.h),
                             child: Row(
                               children: [
                                 Expanded(
@@ -85,14 +111,15 @@ class SupplicationsScreen extends StatelessWidget {
                                         "${AppCubit.get(context).supplications[index]['title']}",
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: 20.sp,
                                         ),
                                       ),
                                       Text(
-                                        "${AppCubit.get(context).supplications[index]['number']}",
+                                        " عدد التسبيح : ${AppCubit.get(context).supplications[index]['number']}",
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: 20.sp,
+
                                         ),
                                       ),
                                     ],
@@ -114,6 +141,7 @@ class SupplicationsScreen extends StatelessWidget {
                                   icon: Icon(
                                     Icons.mode_rounded,
                                     color: Colors.grey[200],
+                                    size: 25.h,
                                   ),
                                 ),
                                 IconButton(
@@ -124,6 +152,8 @@ class SupplicationsScreen extends StatelessWidget {
                                   },
                                   icon: Icon(
                                     Icons.delete,
+                                    size: 25.h,
+
                                     color: Colors.grey[200],
                                   ),
                                 ),
@@ -134,18 +164,18 @@ class SupplicationsScreen extends StatelessWidget {
                       ),
                     ),
                     separatorBuilder: (context, index) => SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     itemCount: AppCubit.get(context).supplications.length),
               ),
             ),
             Positioned(
               bottom: 14,
-              right: 20,
+              right: 20.w,
               child: Container(
-                height: 60,
+                height: 60.h,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  padding:  EdgeInsets.symmetric(horizontal: 2.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -153,7 +183,7 @@ class SupplicationsScreen extends StatelessWidget {
                         "المجموع:",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 18.sp,
                           decoration: TextDecoration.none,
                         ),
                       ),
@@ -161,7 +191,7 @@ class SupplicationsScreen extends StatelessWidget {
                         "${AppCubit.get(context).sum}",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
+                          fontSize: 18.sp,
                           decoration: TextDecoration.none,
                         ),
                       ),
@@ -172,7 +202,7 @@ class SupplicationsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.blue,
                 ),
-                width: 150,
+                width: 150.w,
               ),
             ),
           ],
@@ -185,13 +215,16 @@ class SupplicationsScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Make the bottom sheet scrollable
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width
+      ),
       builder: (BuildContext context) {
         return Padding(
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom, // Adjust padding when keyboard appears
           ),
           child: Container(
-            padding: const EdgeInsets.all(16.0),
+            padding:  EdgeInsets.all(16.h),
             child: Form(
               key: form,
               child: SingleChildScrollView( // Wrap with SingleChildScrollView
@@ -199,15 +232,15 @@ class SupplicationsScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                     Text(
                       "إضافة الدعاء",
                       maxLines: 2,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: 20.h),
                     TextFormField(
                       controller: supplication,
                       validator: (String? value) {
@@ -216,30 +249,51 @@ class SupplicationsScreen extends StatelessWidget {
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
+style: TextStyle(
+    fontSize: 14.sp
+
+),
+
+                      decoration:  InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'أدخل دعاءك',
+                        errorStyle: TextStyle(
+                            fontSize: 14.sp
+
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: 14.sp
+                        )
                       ),
                     ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: 20.h),
                     TextFormField(
                       validator: (String? value) {
                         if (value!.isEmpty) {
                           return "الرجاء كتابة رقم المرات التي تريده بها  الدعاء";
                         }
                         return null;
-                      },
+                      },style: TextStyle(
+                      fontSize: 14.sp
+                    ),
                       controller: numberOfSupplications,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
+                          errorStyle: TextStyle(
+                              fontSize: 14.sp
+
+                          ),
+                          labelStyle: TextStyle(
+                              fontSize: 14.sp
+                          ),
                         border: OutlineInputBorder(),
                         labelText: 'ادخل رقم المرات التي تريده بها  الدعاء',
                       ),
                     ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: 20.h),
                     Container(
                       width: double.infinity,
-                      height: 50,
+                      height: 50.h,
                       color: Colors.blue,
                       child: MaterialButton(
                         onPressed: () {
@@ -265,10 +319,10 @@ class SupplicationsScreen extends StatelessWidget {
                             }
                           }
                         },
-                        child: const Text(
+                        child:  Text(
                           'حفظ الدعاء',
                           style: TextStyle(
-                              color: Colors.white, fontSize: 20),
+                              color: Colors.white, fontSize: 20.sp),
                         ),
                       ),
                     ),
