@@ -26,19 +26,55 @@ class SupplicationsScreen extends StatelessWidget {
           alignment: Alignment.topRight,
           children: [
             Scaffold(
-              floatingActionButton: Container(
-                height: 60.h,
-                width: 60.h,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    _showBottomSheet(context);
-                  },
-                  backgroundColor:Theme.of(context).floatingActionButtonTheme.backgroundColor,
-                  child:  Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 30.h,
-                  ),
+              floatingActionButton:
+              Padding(
+                padding:  EdgeInsets.only(right: 30.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 60.h,
+                      child: Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: 2.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "المجموع : ${AppCubit.get(context).sum} ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).floatingActionButtonTheme.backgroundColor
+                      ),
+                      width: 155.w,
+                    ),
+                    Spacer(),
+                    Container(
+                      height: 60.h,
+                      width: 60.h,
+
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          _showBottomSheet(context);
+                        },
+                        backgroundColor:Theme.of(context).floatingActionButtonTheme.backgroundColor,
+                        child:  Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 30.h,
+                        ),
+                      ),
+                    ),
+
+                  ],
                 ),
               ),
               appBar: AppBar(
@@ -167,42 +203,6 @@ class SupplicationsScreen extends StatelessWidget {
                       height: 10.h,
                     ),
                     itemCount: AppCubit.get(context).supplications.length),
-              ),
-            ),
-            Positioned(
-              bottom: 14,
-              right: 20.w,
-              child: Container(
-                height: 60.h,
-                child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 2.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "المجموع:",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.sp,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      Text(
-                        "${AppCubit.get(context).sum}",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.sp,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).floatingActionButtonTheme.backgroundColor
-                ),
-                width: 150.w,
               ),
             ),
           ],

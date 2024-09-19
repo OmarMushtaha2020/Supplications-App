@@ -58,12 +58,17 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   flutter_native_splash: ^2.2.18
+  flutter_launcher_icons: ^0.13.1
+
 flutter_native_splash:
   color: "#ffffff" # Background color of your splash screen
   image: assets/image/imageThree.png # Path to your splash screen image
   android: true # Ensure it's applied to Android
   ios: true # Ensure it's applied to iOS
-
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/image/imageThree.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

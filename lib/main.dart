@@ -5,6 +5,7 @@ import 'package:daily_supplications_app/shared/local/shared_preferences.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,10 +45,24 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-class App extends StatelessWidget {
-  bool ?value;
+class App extends StatefulWidget {
+
   App(value);
 
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  bool ?value;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+  }
   @override
   Widget build(BuildContext context) {
     return  BlocConsumer<AppCubit, AppStates>(
