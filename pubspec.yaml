@@ -45,6 +45,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   device_preview:
   shared_preferences: ^2.2.3
+  firebase_core:
 
 dev_dependencies:
   flutter_test:
