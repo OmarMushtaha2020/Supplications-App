@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:label="daily_supplications_app"
+        android:label="اذكاري"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

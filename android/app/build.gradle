@@ -21,6 +21,11 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     namespace "com.example.daily_supplications_app"
@@ -47,29 +52,41 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
-    buildTypes {
+    signingConfigs {
         release {
-            signingConfig signingConfigs.debug
+            keyAlias = keystoreProperties['keyAlias']
+            keyPassword = keystoreProperties['keyPassword']
+            storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword = keystoreProperties['storePassword']
         }
     }
-}
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now,
+            // so `flutter run --release` works.
+            signingConfig = signingConfigs.debug
+            signingConfig = signingConfigs.release
+        }
 
-flutter {
-    source '../..'
-}
-
-configurations.all {
-    resolutionStrategy {
-        force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
     }
-}
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+    flutter {
+        source '../..'
+    }
 
-    // Exclude older Kotlin modules causing duplication
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22") {
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+    configurations.all {
+        resolutionStrategy {
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+        }
+    }
+
+    dependencies {
+        implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+
+        // Exclude older Kotlin modules causing duplication
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22") {
+            exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        }
     }
 }

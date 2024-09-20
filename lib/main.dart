@@ -2,7 +2,6 @@ import 'package:daily_supplications_app/modules/supplications_screen.dart';
 import 'package:daily_supplications_app/shared/cubit/cubit.dart';
 import 'package:daily_supplications_app/shared/cubit/status.dart';
 import 'package:daily_supplications_app/shared/local/shared_preferences.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,12 +13,9 @@ void main()async {
   await CacthHelper.inti();
 bool?  themeModeValue= await CacthHelper.get_Data(key: "themeMode")??false;
   runApp(
-    DevicePreview(
-      enabled: true, // Set to false in production
-      builder: (context) => BlocProvider(
-        create: (context) => AppCubit()..createDb()..changeValueOfThemeMode(value:themeModeValue ),
-        child: MyApp(themeModeValue),
-      ),
+    BlocProvider(
+      create: (context) => AppCubit()..createDb()..changeValueOfThemeMode(value:themeModeValue ),
+      child: MyApp(themeModeValue),
     ),
   );
 }
@@ -77,7 +73,6 @@ class _AppState extends State<App> {
   builder: (context, state) {
     return MaterialApp(
       locale: const Locale('ar'),
-      builder: DevicePreview.appBuilder,
       supportedLocales: const [
         Locale('ar'),
         Locale('en'),
