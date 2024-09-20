@@ -2,6 +2,7 @@ import 'package:daily_supplications_app/modules/prayer_screen.dart';
 import 'package:daily_supplications_app/shared/cubit/status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +36,7 @@ class SupplicationsScreen extends StatelessWidget {
                     Container(
                       height: 60.h,
                       child: Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: 2.w),
+                        padding:  EdgeInsets.symmetric(horizontal: 30.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -54,7 +55,6 @@ class SupplicationsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           color: Theme.of(context).floatingActionButtonTheme.backgroundColor
                       ),
-                      width: 155.w,
                     ),
                     Spacer(),
                     Container(
@@ -266,12 +266,24 @@ style: Theme.of(context).textTheme.labelMedium?.copyWith(
                     ),
                      SizedBox(height: 20.h),
                     TextFormField(
+
                       validator: (String? value) {
                         if (value!.isEmpty) {
                           return "الرجاء كتابة رقم المرات التي تريده بها  الدعاء";
                         }
+                        int? number = int.tryParse(value);
+                        if ( number! <= 1) {
+                          return 'الرجاء إدخال رقم أكبر من 1';
+                        }
+                        if ( number! >= 101) {
+                          return 'الرجاء إدخال رقم أقل من 100';
+                        }
+
                         return null;
                       },
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       style:  Theme.of(context).textTheme.labelMedium?.copyWith(
                           fontSize: 14.sp
                       ),
