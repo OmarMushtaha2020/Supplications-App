@@ -1,19 +1,24 @@
 import 'package:daily_supplications_app/modules/prayer_screen.dart';
 import 'package:daily_supplications_app/shared/cubit/status.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../shared/cubit/cubit.dart';
 
-class SupplicationsScreen extends StatelessWidget {
-  SupplicationsScreen({super.key});
+class SupplicationsScreen extends StatefulWidget {
+  const SupplicationsScreen({super.key});
 
+  @override
+  State<SupplicationsScreen> createState() => _SupplicationsScreenState();
+}
+
+class _SupplicationsScreenState extends State<SupplicationsScreen> {
   var form = GlobalKey<FormState>();
+
   var supplication = TextEditingController();
+
   var numberOfSupplications = TextEditingController();
 
   @override
@@ -35,6 +40,10 @@ class SupplicationsScreen extends StatelessWidget {
                   children: [
                     Container(
                       height: 60.h,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).floatingActionButtonTheme.backgroundColor
+                      ),
                       child: Padding(
                         padding:  EdgeInsets.symmetric(horizontal: 30.w),
                         child: Row(
@@ -51,13 +60,9 @@ class SupplicationsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Theme.of(context).floatingActionButtonTheme.backgroundColor
-                      ),
                     ),
-                    Spacer(),
-                    Container(
+                    const Spacer(),
+                    SizedBox(
                       height: 60.h,
                       width: 60.h,
 
@@ -91,9 +96,9 @@ class SupplicationsScreen extends StatelessWidget {
                         fontSize: 25.sp,
                       ),
                     ),
-          Spacer(),
+          const Spacer(),
           Center(
-            child: Container(height: 70.w,width: 70.w,child: Column(
+            child: SizedBox(height: 70.w,width: 70.w,child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -112,7 +117,7 @@ class SupplicationsScreen extends StatelessWidget {
                 child: ListView.separated(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) => Padding(
                       padding:  EdgeInsets.symmetric(horizontal: 10.w),
                       child: GestureDetector(
@@ -253,7 +258,7 @@ style: Theme.of(context).textTheme.labelMedium?.copyWith(
     fontSize: 14.sp
 ),
                       decoration:  InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         labelText: 'أدخل دعاءك',
                         errorStyle: TextStyle(
                             fontSize: 14.sp
@@ -275,7 +280,7 @@ style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         if ( number! <= 1) {
                           return 'الرجاء إدخال رقم أكبر من 1';
                         }
-                        if ( number! >= 101) {
+                        if ( number >= 101) {
                           return 'الرجاء إدخال رقم أقل من 100';
                         }
 
@@ -297,7 +302,7 @@ style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
                               fontSize: 14.sp
                           ),
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         labelText: 'ادخل رقم المرات التي تريده بها  الدعاء',
                       ),
                     ),
@@ -316,6 +321,8 @@ style: Theme.of(context).textTheme.labelMedium?.copyWith(
                                   title: supplication.text,
                                   number: int.parse(numberOfSupplications.text.toString()))
                                   .then((value) {
+                                  numberOfSupplications.text='';
+                                  supplication.text='';
                                 Navigator.pop(context); // Close the modal sheet
                               });
                             } else {
@@ -344,6 +351,9 @@ style: Theme.of(context).textTheme.labelMedium?.copyWith(
           ),
         );
       },
-    );
+    ).then((value) {
+      numberOfSupplications.text='';
+      supplication.text='';
+    });
   }
 }

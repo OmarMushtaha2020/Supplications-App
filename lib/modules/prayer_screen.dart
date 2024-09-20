@@ -12,7 +12,7 @@ class PrayerScreen extends StatelessWidget {
   int? number;
   int? id;
 
-  PrayerScreen(this.title, this.number, this.id);
+  PrayerScreen(this.title, this.number, this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class PrayerScreen extends StatelessWidget {
               onPressed: () {
                 AppCubit.get(context).getNumber(id);
 
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SupplicationsScreen()), (route) => false);
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const SupplicationsScreen()), (route) => false);
               },
               icon: Icon(
                 Icons.arrow_back,
@@ -49,7 +49,7 @@ class PrayerScreen extends StatelessWidget {
               ),
             ),
           ),
-          body: Container(
+          body: SizedBox(
             width: double.infinity,
             child:
             Align(
@@ -60,7 +60,7 @@ class PrayerScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "${title}",
+                      "$title",
                       style: Theme.of(context).textTheme.labelMedium!,
                     ),
                     SizedBox(
@@ -92,7 +92,7 @@ class PrayerScreen extends StatelessWidget {
                                 positionFactor: 0.1,
                                 angle: 90,
                                 widget: Text(
-                                  '${AppCubit.get(context).number.toStringAsFixed(0)} / ${number}',
+                                  '${AppCubit.get(context).number.toStringAsFixed(0)} / $number',
                                   style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                     fontSize: 20.sp,
                                   ),

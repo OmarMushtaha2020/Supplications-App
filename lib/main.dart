@@ -3,7 +3,6 @@ import 'package:daily_supplications_app/shared/cubit/cubit.dart';
 import 'package:daily_supplications_app/shared/cubit/status.dart';
 import 'package:daily_supplications_app/shared/local/shared_preferences.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +13,6 @@ void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacthHelper.inti();
 bool?  themeModeValue= await CacthHelper.get_Data(key: "themeMode")??false;
-print(themeModeValue!);
   runApp(
     DevicePreview(
       enabled: true, // Set to false in production
@@ -26,14 +24,21 @@ print(themeModeValue!);
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+   const MyApp(value, {super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   bool ?value;
-   MyApp(value);
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize:  Size(393, 852), // Set your base design size here
+      designSize:  const Size(393, 852), // Set your base design size here
       builder: (context, child) {
 
         ScreenUtil.configure(
@@ -47,7 +52,7 @@ class MyApp extends StatelessWidget {
 }
 class App extends StatefulWidget {
 
-  App(value);
+  const App(value, {super.key});
 
   @override
   State<App> createState() => _AppState();
@@ -71,8 +76,7 @@ class _AppState extends State<App> {
   },
   builder: (context, state) {
     return MaterialApp(
-      useInheritedMediaQuery: true, // Necessary for DevicePreview
-      locale: Locale('ar'),
+      locale: const Locale('ar'),
       builder: DevicePreview.appBuilder,
       supportedLocales: const [
         Locale('ar'),
@@ -85,23 +89,23 @@ class _AppState extends State<App> {
       ],
 
       darkTheme: ThemeData(
-        scaffoldBackgroundColor: Color(0Xff21201e),
+        scaffoldBackgroundColor: const Color(0Xff21201e),
         textTheme: TextTheme(
           labelMedium: TextStyle(
               fontSize: 25.sp, fontWeight: FontWeight.bold,
               color: Colors.white,
           )
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Color(0XFF005b1e),
           foregroundColor: Color(0xff000000),
           iconTheme: IconThemeData(
             color: Colors.white,
           )
         ),
-          cardColor: Color(0Xff5846fe),
+          cardColor: const Color(0Xff5846fe),
 
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Color(0xFF01591c),
         )
       ),
@@ -113,7 +117,7 @@ class _AppState extends State<App> {
                 color: Colors.black,
               )
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
               backgroundColor:Colors.blue,
               foregroundColor: Colors.blue,
               iconTheme: IconThemeData(
@@ -122,7 +126,7 @@ class _AppState extends State<App> {
           ),
           cardColor: Colors.blue,
 
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: Colors.blue,
           )
       ),
@@ -131,7 +135,7 @@ class _AppState extends State<App> {
 
 
       debugShowCheckedModeBanner: false,
-      home: SupplicationsScreen(),
+      home: const SupplicationsScreen(),
     );
   },
 );
