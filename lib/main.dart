@@ -11,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacthHelper.inti();
-bool?  themeModeValue= await CacthHelper.get_Data(key: "themeMode")??false;
+bool?  themeModeValue= await CacthHelper.get_Data(key: "themeMode")??true;
   runApp(
     BlocProvider(
       create: (context) => AppCubit()..createDb()..changeValueOfThemeMode(value:themeModeValue ),

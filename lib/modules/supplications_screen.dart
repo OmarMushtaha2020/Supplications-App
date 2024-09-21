@@ -277,8 +277,8 @@ style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           return "الرجاء كتابة رقم المرات التي تريده بها  الدعاء";
                         }
                         int? number = int.tryParse(value);
-                        if ( number! <= 1) {
-                          return 'الرجاء إدخال رقم أكبر من 1';
+                        if ( number! <= 5) {
+                          return 'الرجاء إدخال رقم أكبر من 5';
                         }
                         if ( number >= 101) {
                           return 'الرجاء إدخال رقم أقل من 100';

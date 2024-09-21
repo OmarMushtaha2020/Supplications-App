@@ -1,4 +1,4 @@
-package com.example.daily_supplications_app
+package dev.supplications
 
 import io.flutter.embedding.android.FlutterActivity
 

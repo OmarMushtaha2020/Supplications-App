@@ -28,7 +28,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.example.daily_supplications_app"
+    namespace "dev.supplications"
     compileSdk 34  // You can change this to match the latest available version
     ndkVersion flutter.ndkVersion
 
@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.daily_supplications_app"
+        applicationId "dev.supplications"
         minSdkVersion 21
         targetSdkVersion 33  // Match with compileSdk version
         versionCode flutterVersionCode.toInteger()
@@ -65,7 +65,6 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now,
             // so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
             signingConfig = signingConfigs.release
         }
 

@@ -61,7 +61,7 @@ class PrayerScreen extends StatelessWidget {
                   children: [
                     Text(
                       "$title",
-                      style: Theme.of(context).textTheme.labelMedium!,
+                      style: Theme.of(context).textTheme.labelMedium!,textAlign: TextAlign.center,
                     ),
                     SizedBox(
                       height: 20.h,

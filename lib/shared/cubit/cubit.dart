@@ -178,8 +178,12 @@ class AppCubit extends Cubit<AppStates> {
     print(number);
     print(listNumber);
     updatesNumberOfTimesSupplication(number+listNumber!,id).then((value) {
-      number=0;
-      listNumber=0;
+      Future.delayed(Duration(seconds: 1)).then((value) {
+        number=0;
+        listNumber=0;
+      });
+
+
     });
   });
 }
